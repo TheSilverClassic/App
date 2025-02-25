@@ -1,6 +1,32 @@
-// CharactersTable.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+
+// Define table columns in one place.
+const columns = [
+  { key: 'id', label: 'ID' },
+  { key: 'name', label: 'Name' },
+  { key: 'owner', label: 'Owner' },
+  { key: 'char_class', label: 'Class' },
+  { key: 'level', label: 'Level' },
+  { key: 'health', label: 'Health' },
+  { key: 'created_at', label: 'Created At' },
+];
+
+// Component to render a single character row.
+const CharacterRow = ({ character }) => (
+  <tr>
+    {columns.map((column) => {
+      let cellData = character[column.key];
+      if (column.key === 'health') {
+        // Combine health and max_health.
+        cellData = `${character.health} / ${character.max_health}`;
+      } else if (column.key === 'created_at' && cellData) {
+        cellData = new Date(cellData).toLocaleString();
+      }
+      return <td key={column.key}>{cellData}</td>;
+    })}
+  </tr>
+);
 
 const CharactersTable = ({ refresh }) => {
   const [characters, setCharacters] = useState([]);
@@ -8,12 +34,13 @@ const CharactersTable = ({ refresh }) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    axios.get('http://localhost:8000/characters')
-      .then(response => {
+    axios
+      .get('http://localhost:8000/characters')
+      .then((response) => {
         setCharacters(response.data);
         setLoading(false);
       })
-      .catch(err => {
+      .catch((err) => {
         setError(err.message);
         setLoading(false);
       });
@@ -26,30 +53,14 @@ const CharactersTable = ({ refresh }) => {
     <table>
       <thead>
         <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Owner</th>
-          <th>Class</th>
-          <th>Level</th>
-          <th>Health</th>
-          <th>Created At</th>
+          {columns.map((column) => (
+            <th key={column.key}>{column.label}</th>
+          ))}
         </tr>
       </thead>
       <tbody>
-        {characters.map((char) => (
-          <tr key={char.id}>
-            <td>{char.id}</td>
-            <td>{char.name}</td>
-            <td>{char.owner}</td>
-            <td>{char.char_class}</td>
-            <td>{char.level}</td>
-            <td>{char.health} / {char.max_health}</td>
-            <td>
-              {char.created_at
-                ? new Date(char.created_at).toLocaleString()
-                : ''}
-            </td>
-          </tr>
+        {characters.map((character) => (
+          <CharacterRow key={character.id} character={character} />
         ))}
       </tbody>
     </table>
