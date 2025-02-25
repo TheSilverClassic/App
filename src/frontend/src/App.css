@@ -1,25 +1,102 @@
 /* App.css */
 
-/* The main container for dark mode */
-.dark-mode {
-  background-color: #000; /* black background */
-  color: #fff;           /* white text */
-  min-height: 100vh;     /* full viewport height */
+/* Global dark background and text */
+body {
+  background-color: #121212; /* Dark grayish background */
+  color: #ffffff;            /* White text */
+  font-family: sans-serif;
   margin: 0;
+  padding: 0;
+}
+
+/* Container to center and limit width */
+.container {
+  max-width: 800px;
+  margin: 0 auto;
   padding: 1rem;
 }
 
-/* Style tables in dark mode */
-.dark-mode table {
-  border-collapse: collapse;
-  margin: 0 auto;
-  background-color: #000;
+/* Main title styling */
+.title {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+}
+
+/* Card-like container for the form */
+.form-card {
+  background-color: #1f1f2e; /* Slightly lighter dark background */
+  padding: 2rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+}
+
+/* Form headings */
+.form-card h2 {
+  margin-top: 0;
+}
+
+/* Spacing for individual form groups */
+.form-group {
+  margin-bottom: 1rem;
+}
+
+/* Label styling */
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+/* Text and number inputs */
+.form-group input[type="text"],
+.form-group input[type="number"] {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #444;
+  border-radius: 4px;
+  background-color: #222;
   color: #fff;
 }
 
-/* Table cells and headers */
-.dark-mode th,
-.dark-mode td {
-  border: 1px solid #fff; /* white borders */
-  padding: 0.5rem;
+/* Create Character button */
+button {
+  background-color: #0a84ff;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #fff;
+  font-size: 1rem;
+}
+
+button:hover {
+  background-color: #005bb5;
+}
+
+/* Table styling: full width, dark background */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 2rem;
+  background-color: #1f1f2e;
+  border-radius: 8px;
+  overflow: hidden; /* So border-radius can clip corners */
+}
+
+/* Table header row */
+table thead {
+  background-color: #29293d;
+}
+
+/* Table cells */
+table th,
+table td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid #444;
+}
+
+/* Row hover effect */
+table tr:hover {
+  background-color: #2d2d45;
 }

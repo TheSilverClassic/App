@@ -1,13 +1,13 @@
+// CharactersTable.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const CharactersTable = () => {
+const CharactersTable = ({ refresh }) => {
   const [characters, setCharacters] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Change the URL if your FastAPI server is running on a different port or domain
     axios.get('http://localhost:8000/characters')
       .then(response => {
         setCharacters(response.data);
@@ -17,13 +17,13 @@ const CharactersTable = () => {
         setError(err.message);
         setLoading(false);
       });
-  }, []);
+  }, [refresh]);
 
   if (loading) return <div>Loading characters...</div>;
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <table border="1">
+    <table>
       <thead>
         <tr>
           <th>ID</th>
@@ -41,10 +41,14 @@ const CharactersTable = () => {
             <td>{char.id}</td>
             <td>{char.name}</td>
             <td>{char.owner}</td>
-            <td>{char.class_ || char.class}</td>
+            <td>{char.char_class}</td>
             <td>{char.level}</td>
             <td>{char.health} / {char.max_health}</td>
-            <td>{new Date(char.created_at).toLocaleString()}</td>
+            <td>
+              {char.created_at
+                ? new Date(char.created_at).toLocaleString()
+                : ''}
+            </td>
           </tr>
         ))}
       </tbody>

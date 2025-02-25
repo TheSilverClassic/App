@@ -2,11 +2,19 @@
 import React from 'react';
 import './App.css';
 import CharactersTable from './CharactersTable';
+import CreateCharacterForm from './CreateCharacterForm';
 
 function App() {
   return (
-    <div className="dark-mode">
-      <h1>DnD Campaign Characters</h1>
+    <div className="container">
+      <h1 className="title">DnD Campaign Characters</h1>
+
+      <div className="form-card">
+        <h2>Create New Character</h2>
+        {/* CreateCharacterForm handles the form groups & button */}
+        <CreateCharacterForm />
+      </div>
+
       <CharactersTable />
     </div>
   );
