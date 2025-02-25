@@ -1,8 +1,26 @@
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
+from datetime import datetime
+from typing import Optional
+from typing import List
 import asyncpg
 
 app = FastAPI()
+
+# ------------------------------------------------
+# Enable CORS to allow requests from your React app
+# ------------------------------------------------
+origins = [
+    "http://localhost:3000",  # React development server
+]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,  # Allow only the specified origins
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # ------------------------------------------------
 # Pydantic Model for Character Input
@@ -21,6 +39,27 @@ class Character(BaseModel):
     health: int = 10
     max_health: int = 10
     initiative: int = 0
+
+# ----------------------------------------------
+# Model for output (includes timestamps)
+# ----------------------------------------------
+class CharacterOut(BaseModel):
+    id: int
+    owner: Optional[str]
+    name: str
+    char_class: Optional[str] = None
+    level: int
+    charisma: int
+    constitution: int
+    dexterity: int
+    intelligence: int
+    strength: int
+    wisdom: int
+    health: int
+    max_health: int
+    initiative: int
+    created_at: datetime
+    updated_at: datetime
 
 # ------------------------------------------------
 # Database Connection Pool Setup
@@ -76,3 +115,14 @@ async def create_character(character: Character):
         except Exception as e:
             raise HTTPException(status_code=500, detail=str(e))
     return {"id": new_id}
+
+# New GET endpoint to fetch all characters
+@app.get("/characters", response_model=List[CharacterOut])
+async def get_characters():
+    async with app.state.pool.acquire() as conn:
+        try:
+            rows = await conn.fetch("SELECT * FROM dnd.characters")
+            # Convert each record to a dict
+            return [dict(row) for row in rows]
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=str(e))
