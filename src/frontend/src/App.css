@@ -1,38 +1,25 @@
-.App {
-  text-align: center;
+/* App.css */
+
+/* The main container for dark mode */
+.dark-mode {
+  background-color: #000; /* black background */
+  color: #fff;           /* white text */
+  min-height: 100vh;     /* full viewport height */
+  margin: 0;
+  padding: 1rem;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Style tables in dark mode */
+.dark-mode table {
+  border-collapse: collapse;
+  margin: 0 auto;
+  background-color: #000;
+  color: #fff;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Table cells and headers */
+.dark-mode th,
+.dark-mode td {
+  border: 1px solid #fff; /* white borders */
+  padding: 0.5rem;
 }
