@@ -100,3 +100,16 @@ table td {
 table tr:hover {
   background-color: #2d2d45;
 }
+
+/* Container for numeric fields arranged in a grid */
+.numeric-fields {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);  /* Adjust number of columns as needed */
+  gap: 1rem;  /* space between grid items */
+}
+
+/* Optionally, adjust form-group width for grid items */
+.numeric-fields .form-group {
+  /* These inputs now take full width of their grid cell */
+  width: 100%;
+}

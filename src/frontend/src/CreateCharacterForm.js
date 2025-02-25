@@ -1,9 +1,8 @@
-// CreateCharacterForm.js
 import React, { useState } from 'react';
 import axios from 'axios';
 
 const CreateCharacterForm = ({ onCharacterCreated }) => {
-  const [formData, setFormData] = useState({
+  const initialState = {
     owner: '',
     name: '',
     char_class: '',
@@ -17,17 +16,16 @@ const CreateCharacterForm = ({ onCharacterCreated }) => {
     health: 10,
     max_health: 10,
     initiative: 0
-  });
+  };
+
+  const [formData, setFormData] = useState(initialState);
   const [message, setMessage] = useState('');
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, type } = e.target;
     setFormData({
       ...formData,
-      // Convert numeric fields to number type
-      [name]: ([
-        'level','charisma','constitution','dexterity','intelligence','strength','wisdom','health','max_health','initiative'
-      ].includes(name)) ? parseInt(value, 10) : value
+      [name]: type === 'number' ? parseInt(value, 10) : value,
     });
   };
 
@@ -37,26 +35,25 @@ const CreateCharacterForm = ({ onCharacterCreated }) => {
       const response = await axios.post('http://localhost:8000/characters', formData);
       setMessage(`Character created with id: ${response.data.id}`);
       if (onCharacterCreated) onCharacterCreated();
-      // Reset form
-      setFormData({
-        owner: '',
-        name: '',
-        char_class: '',
-        level: 1,
-        charisma: 0,
-        constitution: 0,
-        dexterity: 0,
-        intelligence: 0,
-        strength: 0,
-        wisdom: 0,
-        health: 10,
-        max_health: 10,
-        initiative: 0
-      });
+      setFormData(initialState); // Reset form after submission
     } catch (error) {
       setMessage('Error creating character: ' + error.message);
     }
   };
+
+  // Array for numeric fields
+  const numericFields = [
+    { label: 'Level', name: 'level' },
+    { label: 'Charisma', name: 'charisma' },
+    { label: 'Constitution', name: 'constitution' },
+    { label: 'Dexterity', name: 'dexterity' },
+    { label: 'Intelligence', name: 'intelligence' },
+    { label: 'Strength', name: 'strength' },
+    { label: 'Wisdom', name: 'wisdom' },
+    { label: 'Health', name: 'health' },
+    { label: 'Max Health', name: 'max_health' },
+    { label: 'Initiative', name: 'initiative' },
+  ];
 
   return (
     <form onSubmit={handleSubmit}>
@@ -94,38 +91,19 @@ const CreateCharacterForm = ({ onCharacterCreated }) => {
         />
       </div>
 
-      <div className="form-group">
-        <label>Level:</label>
-        <input
-          type="number"
-          name="level"
-          value={formData.level}
-          onChange={handleChange}
-        />
+      <div className="numeric-fields">
+        {numericFields.map(field => (
+          <div className="form-group" key={field.name}>
+            <label>{field.label}:</label>
+            <input
+              type="number"
+              name={field.name}
+              value={formData[field.name]}
+              onChange={handleChange}
+            />
+          </div>
+        ))}
       </div>
-
-      {/* Repeat pattern for all numeric fields... */}
-      <div className="form-group">
-        <label>Health:</label>
-        <input
-          type="number"
-          name="health"
-          value={formData.health}
-          onChange={handleChange}
-        />
-      </div>
-
-      <div className="form-group">
-        <label>Max Health:</label>
-        <input
-          type="number"
-          name="max_health"
-          value={formData.max_health}
-          onChange={handleChange}
-        />
-      </div>
-
-      {/* ...and so on for other fields like charisma, constitution, etc. */}
 
       <button type="submit">Create Character</button>
     </form>
