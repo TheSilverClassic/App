@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import './CreateCharacterForm.css';
 
 const CreateCharacterForm = ({ onCharacterCreated }) => {
   const initialState = {

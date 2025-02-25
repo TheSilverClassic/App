@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './CharactersTable.css';
 
 // Define table columns in one place.
 const columns = [

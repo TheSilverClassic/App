@@ -1,0 +1,23 @@
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 2rem;
+    background-color: #1f1f2e;
+    border-radius: 8px;
+    overflow: hidden; /* So border-radius can clip corners */
+  }
+  
+  table thead {
+    background-color: #29293d;
+  }
+  
+  table th,
+  table td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid #444;
+  }
+  
+  table tr:hover {
+    background-color: #2d2d45;
+  }
