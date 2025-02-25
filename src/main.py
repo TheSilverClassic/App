@@ -1,10 +1,17 @@
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
+from dotenv import load_dotenv
 from datetime import datetime
 from typing import Optional
 from typing import List
 import asyncpg
+import os
+
+# Load variables from .env
+load_dotenv()
+
+db_url = os.getenv("DATABASE_URL")  # EXACTLY "DATABASE_URL"
 
 app = FastAPI()
 
@@ -68,11 +75,13 @@ class CharacterOut(BaseModel):
 async def startup():
     """
     Initialize the database connection pool at startup.
-    Make sure to replace 'your_password_here' with your real password.
+    We read the DSN from the .env file via DATABASE_URL.
     """
-    app.state.pool = await asyncpg.create_pool(
-        dsn="postgresql://Admin_Narciso:Lalo0811!@10.0.0.107:5433/postgres"
-    )
+    database_url = os.getenv("DATABASE_URL")
+    if not database_url:
+        raise ValueError("DATABASE_URL is not set in the environment variables.")
+
+    app.state.pool = await asyncpg.create_pool(dsn=database_url)
 
 @app.on_event("shutdown")
 async def shutdown():
