@@ -1,35 +1,24 @@
+// CharactersTable.js
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './CharactersTable.css';
 
-// Define table columns in one place.
 const columns = [
   { key: 'id', label: 'ID' },
   { key: 'name', label: 'Name' },
   { key: 'owner', label: 'Owner' },
-  { key: 'char_class', label: 'Class' },
-  { key: 'level', label: 'Level' },
-  { key: 'health', label: 'Health' },
-  { key: 'created_at', label: 'Created At' },
 ];
 
-// Component to render a single character row.
-const CharacterRow = ({ character }) => (
-  <tr>
-    {columns.map((column) => {
-      let cellData = character[column.key];
-      if (column.key === 'health') {
-        // Combine health and max_health.
-        cellData = `${character.health} / ${character.max_health}`;
-      } else if (column.key === 'created_at' && cellData) {
-        cellData = new Date(cellData).toLocaleString();
-      }
-      return <td key={column.key}>{cellData}</td>;
-    })}
+const CharacterRow = ({ character, onSelectCharacter }) => (
+  <tr onClick={() => onSelectCharacter && onSelectCharacter(character)}>
+    {columns.map((column) => (
+      <td key={column.key}>{character[column.key]}</td>
+    ))}
   </tr>
 );
 
-const CharactersTable = ({ refresh }) => {
+const CharactersTable = ({ refresh, onSelectCharacter }) => {
   const [characters, setCharacters] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -61,7 +50,11 @@ const CharactersTable = ({ refresh }) => {
       </thead>
       <tbody>
         {characters.map((character) => (
-          <CharacterRow key={character.id} character={character} />
+          <CharacterRow
+            key={character.id}
+            character={character}
+            onSelectCharacter={onSelectCharacter}
+          />
         ))}
       </tbody>
     </table>

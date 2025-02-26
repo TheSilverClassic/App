@@ -1,12 +1,14 @@
+/* CreateCharacterForm.css */
+
 .form-group {
     margin-bottom: 1rem;
   }
-  
+
   .form-group label {
     display: block;
     margin-bottom: 0.5rem;
   }
-  
+
   .form-group input[type="text"],
   .form-group input[type="number"] {
     width: 100%;
@@ -16,7 +18,7 @@
     background-color: #222;
     color: #fff;
   }
-  
+
   /* Create Character button */
   button {
     background-color: #0a84ff;
@@ -27,18 +29,18 @@
     color: #fff;
     font-size: 1rem;
   }
-  
+
   button:hover {
     background-color: #005bb5;
   }
-  
+
   /* Container for numeric fields arranged in a grid */
   .numeric-fields {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 1rem;
   }
-  
+
   .numeric-fields .form-group {
     width: 100%;
   }

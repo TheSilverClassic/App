@@ -1,6 +1,8 @@
+// App.js
+
 import React from 'react';
 import './App.css';
-import CharactersTable from './CharactersTable';
+import CharactersSplitView from './CharactersSplitView';
 import CreateCharacterForm from './CreateCharacterForm';
 
 function App() {
@@ -11,7 +13,7 @@ function App() {
         <h2>Create New Character</h2>
         <CreateCharacterForm />
       </div>
-      <CharactersTable />
+      <CharactersSplitView />
     </div>
   );
 }

@@ -1,0 +1,38 @@
+/* CharactersSplitView.css */
+
+.split-view-container {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+    align-items: flex-start; /* Important: no forced equal heights */
+  }
+
+  .table-section {
+    flex: 1;
+  }
+
+  .details-section {
+    flex: 1;
+    background-color: #1f1f2e;
+    padding: 1rem;
+    border-radius: 8px;
+    min-width: 300px;
+  }
+
+  .details-placeholder {
+    color: #ccc;
+    text-align: center;
+    padding: 2rem;
+  }
+
+  .details-card h2 {
+    margin-top: 0;
+  }
+
+  /* 2 columns × 5 rows for stats */
+  .details-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem; /* Space between cells */
+    margin-top: 1rem;
+  }
